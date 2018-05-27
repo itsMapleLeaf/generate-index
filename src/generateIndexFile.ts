@@ -1,17 +1,11 @@
-import { readdirSync, statSync, writeFileSync } from "fs"
 import { resolve } from "path"
+import { readdir, writeFile } from "./fsPromise"
 
-export function generateIndexFile(folderPath: string) {
-  const files = readdirSync(folderPath)
+export async function generateIndexFile(folderPath: string) {
+  const files = await readdir(folderPath)
 
   const exportedFiles = files.filter((file) => {
-    const stats = statSync(resolve(folderPath, file))
-    return (
-      stats.isFile() &&
-      file !== "index.ts" &&
-      !file.includes(".test.") &&
-      !file.includes("__snapshots__")
-    )
+    return file !== "index.ts" && !file.includes(".test.") && !file.includes("__snapshots__")
   })
 
   const exportLines = exportedFiles.map((file) => {
@@ -22,5 +16,7 @@ export function generateIndexFile(folderPath: string) {
   const indexFileContent = exportLines.join("")
   const indexFilePath = resolve(folderPath, "index.ts")
 
-  writeFileSync(indexFilePath, indexFileContent)
+  await writeFile(indexFilePath, indexFileContent)
+
+  return indexFilePath
 }
