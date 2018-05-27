@@ -20,7 +20,9 @@ async function generateIndexCommand() {
 
       await writeFile(indexFilePath, indexContent)
 
-      vscode.workspace.openTextDocument(indexFilePath)
+      // FIXME: figure out how to do this properly
+      // await vscode.workspace.openTextDocument(indexFilePath)
+      // await vscode.window.showTextDocument(vscode.Uri.parse(indexFilePath))
     } catch (error) {
       const errorMessage = `[Generate TS File] Something went wrong: ${error}`
       vscode.window.showErrorMessage(errorMessage)
