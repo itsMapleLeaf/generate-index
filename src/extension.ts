@@ -1,13 +1,21 @@
-import { dirname } from "path"
+import { dirname, resolve } from "path"
 import * as vscode from "vscode"
-import { generateIndexFile } from "./generateIndexFile"
+import { readdir, writeFile } from "./fsPromise"
+import { generateIndexContent } from "./generateIndexContent"
 
 async function generateIndexCommand() {
   const { activeTextEditor } = vscode.window
   if (activeTextEditor) {
     try {
-      const { fileName } = activeTextEditor.document
-      const indexFilePath = await generateIndexFile(dirname(fileName))
+      const targetFolder = dirname(activeTextEditor.document.fileName)
+
+      const files = await readdir(targetFolder)
+
+      const indexContent = generateIndexContent(files)
+      const indexFilePath = resolve(targetFolder, "index.ts")
+
+      await writeFile(indexFilePath, indexContent)
+
       vscode.workspace.openTextDocument(indexFilePath)
     } catch (error) {
       const errorMessage = `[Generate TS File] Something went wrong: ${error}`
