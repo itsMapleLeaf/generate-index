@@ -11,7 +11,11 @@ async function generateIndexCommand() {
 
       const files = await readdir(targetFolder)
 
-      const indexContent = generateIndexContent(files)
+      const indexContent = generateIndexContent(files, [
+        ".test.",
+        "__snapshots__",
+      ])
+
       const indexFilePath = resolve(targetFolder, "index.ts")
 
       await writeFile(indexFilePath, indexContent)

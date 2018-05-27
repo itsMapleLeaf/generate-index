@@ -1,9 +1,11 @@
-export function generateIndexContent(files: string[]) {
+export function generateIndexContent(
+  files: string[],
+  excludePatterns: string[] = [],
+) {
   const exportedFiles = files.filter((file) => {
     return (
       file !== "index.ts" &&
-      !file.includes(".test.") &&
-      !file.includes("__snapshots__")
+      !excludePatterns.some((pattern) => file.includes(pattern))
     )
   })
 

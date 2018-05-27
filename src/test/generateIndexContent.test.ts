@@ -11,4 +11,17 @@ suite("generateIndexContent", () => {
       `export * from "./a"\nexport * from "./b"\nexport * from "./c"\n`,
     )
   })
+
+  test("returns empty string if given no files", () => {
+    const content = generateIndexContent([])
+
+    assert.equal(content, "")
+  })
+
+  test("excludes files that match the given patterns", () => {
+    const files = ["file.test.ts", "__snapshots__", "a.ts"]
+    const content = generateIndexContent(files, [".test.", "__snapshots__"])
+
+    assert.equal(content, `export * from "./a"\n`)
+  })
 })
