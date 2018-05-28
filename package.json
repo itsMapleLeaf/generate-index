@@ -1,15 +1,18 @@
 {
   "name": "generate-ts-index",
   "displayName": "generate-ts-index",
-  "description":
-    "Generate a typescript index file that exports from all files in a directory",
+  "description": "Generate a typescript index file that exports from all files in a directory",
   "version": "0.0.1",
   "publisher": "kingdaro",
   "engines": {
     "vscode": "^1.23.0"
   },
-  "categories": ["Other"],
-  "activationEvents": ["onCommand:extension.generateIndex"],
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.generateIndex"
+  ],
   "main": "./out/extension",
   "contributes": {
     "commands": [
@@ -27,6 +30,7 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@types/fs-extra": "^5.0.2",
     "@types/jest": "^22.2.3",
     "@types/mocha": "^2.2.42",
     "@types/node": "^10.1.3",
@@ -37,10 +41,17 @@
     "vscode": "^1.1.6"
   },
   "dependencies": {
-    "util.promisify": "^1.0.0"
+    "fs-extra": "^6.0.1"
   },
   "jest": {
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },

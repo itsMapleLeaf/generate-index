@@ -1,24 +1,26 @@
+import { readdir, writeFile } from "fs-extra"
 import { dirname, resolve } from "path"
 import * as vscode from "vscode"
-import { readdir, writeFile } from "./fsPromise"
 import { generateIndexContent } from "./generateIndexContent"
+
+async function writeIndexFile(fileName: string) {
+  const targetFolder = dirname(fileName)
+
+  const files = await readdir(targetFolder)
+
+  const indexFilePath = resolve(targetFolder, "index.ts")
+  const indexContent = generateIndexContent(files, [".test.", "__snapshots__"])
+
+  await writeFile(indexFilePath, indexContent)
+}
 
 async function generateIndexCommand() {
   const { activeTextEditor } = vscode.window
   if (activeTextEditor) {
     try {
-      const targetFolder = dirname(activeTextEditor.document.fileName)
+      const { fileName } = activeTextEditor.document
 
-      const files = await readdir(targetFolder)
-
-      const indexContent = generateIndexContent(files, [
-        ".test.",
-        "__snapshots__",
-      ])
-
-      const indexFilePath = resolve(targetFolder, "index.ts")
-
-      await writeFile(indexFilePath, indexContent)
+      await writeIndexFile(fileName)
 
       // FIXME: figure out how to do this properly
       // await vscode.workspace.openTextDocument(indexFilePath)
