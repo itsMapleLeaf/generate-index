@@ -2,7 +2,7 @@
   "name": "generate-ts-index",
   "displayName": "generate-ts-index",
   "description": "Generate a typescript index file that exports from all files in a directory",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "publisher": "kingdaro",
   "engines": {
     "vscode": "^1.23.0"
