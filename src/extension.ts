@@ -3,9 +3,7 @@ import { dirname, resolve } from "path"
 import * as vscode from "vscode"
 import { generateIndexContent } from "./generateIndexContent"
 
-async function writeIndexFile(fileName: string) {
-  const targetFolder = dirname(fileName)
-
+async function writeIndexFile(targetFolder: string) {
   const files = await readdir(targetFolder)
 
   const indexFilePath = resolve(targetFolder, "index.ts")
@@ -20,7 +18,7 @@ async function generateIndexCommand() {
     try {
       const { fileName } = activeTextEditor.document
 
-      await writeIndexFile(fileName)
+      await writeIndexFile(dirname(fileName))
 
       // FIXME: figure out how to do this properly
       // await vscode.workspace.openTextDocument(indexFilePath)
