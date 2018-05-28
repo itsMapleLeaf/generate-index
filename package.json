@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "publisher": "kingdaro",
+  "repository": "https://github.com/kingdaro/generate-index",
   "engines": {
     "vscode": "^1.23.0"
   },
