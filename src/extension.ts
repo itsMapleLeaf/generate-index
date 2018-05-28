@@ -4,19 +4,30 @@ import { writeIndexFile } from "./writeIndexFile"
 
 async function generateIndexCommand() {
   const { activeTextEditor } = vscode.window
-  if (activeTextEditor) {
-    try {
-      const { fileName } = activeTextEditor.document
+  if (!activeTextEditor) {
+    vscode.window.showErrorMessage(
+      "Please open a file before activating this command.",
+    )
+    return
+  }
 
-      await writeIndexFile(dirname(fileName))
+  const { fileName } = activeTextEditor.document
+  if (!/\.tsx?$/.test(fileName)) {
+    vscode.window.showErrorMessage(
+      "Only TypeScript files are supported at the moment, sorry!",
+    )
+    return
+  }
 
-      // FIXME: figure out how to do this properly
-      // await vscode.workspace.openTextDocument(indexFilePath)
-      // await vscode.window.showTextDocument(vscode.Uri.parse(indexFilePath))
-    } catch (error) {
-      const errorMessage = `[Generate TS File] Something went wrong: ${error}`
-      vscode.window.showErrorMessage(errorMessage)
-    }
+  try {
+    await writeIndexFile(dirname(fileName))
+
+    // FIXME: figure out how to do this properly
+    // await vscode.workspace.openTextDocument(indexFilePath)
+    // await vscode.window.showTextDocument(vscode.Uri.parse(indexFilePath))
+  } catch (error) {
+    const errorMessage = `[Generate TS File] Something went wrong: ${error}`
+    vscode.window.showErrorMessage(errorMessage)
   }
 }
 
