@@ -1,16 +1,6 @@
-import { readdir, writeFile } from "fs-extra"
-import { dirname, resolve } from "path"
+import { dirname } from "path"
 import * as vscode from "vscode"
-import { generateIndexContent } from "./generateIndexContent"
-
-async function writeIndexFile(targetFolder: string) {
-  const files = await readdir(targetFolder)
-
-  const indexFilePath = resolve(targetFolder, "index.ts")
-  const indexContent = generateIndexContent(files, [".test.", "__snapshots__"])
-
-  await writeFile(indexFilePath, indexContent)
-}
+import { writeIndexFile } from "./writeIndexFile"
 
 async function generateIndexCommand() {
   const { activeTextEditor } = vscode.window
