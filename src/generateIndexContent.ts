@@ -4,6 +4,7 @@ export function generateIndexContent(
 ) {
   const exportedFiles = files.filter((file) => {
     return (
+      /\.tsx?$/.test(file) &&
       file !== "index.ts" &&
       !excludePatterns.some((pattern) => file.includes(pattern))
     )
