@@ -2,7 +2,7 @@
   "name": "generate-index",
   "displayName": "generate-index",
   "description": "Generate an index file that exports everything from all files in a directory",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "publisher": "kingdaro",
   "repository": "https://github.com/kingdaro/generate-index",
