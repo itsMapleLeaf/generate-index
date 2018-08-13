@@ -16,6 +16,13 @@ describe("generateIndexContent", () => {
     expect(content).toBe("")
   })
 
+  it("doesn't include non typescript files", () => {
+    const files = ["a.ts", "b.tsx", "data.json", "c.js"]
+    const content = generateIndexContent(files, [".test.", "__snapshots__"])
+
+    expect(content).toBe(`export * from "./a"\nexport * from "./b"\n`,)
+  })
+
   it("excludes files that match the given patterns", () => {
     const files = ["file.test.ts", "__snapshots__", "a.ts"]
     const content = generateIndexContent(files, [".test.", "__snapshots__"])
